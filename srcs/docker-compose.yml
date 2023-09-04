@@ -10,17 +10,10 @@ services:
       - app-network
     volumes:
       - mydata:/shard_data
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-u$$MY_USER", "-p$$MY_PASS"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-
 
   wordpress:
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     build: ./requirements/wordpress/.
     container_name: wordpress-cont
     image: wordpress:mytag
